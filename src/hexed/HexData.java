@@ -4,8 +4,15 @@ import arc.*;
 import arc.math.geom.*;
 import arc.struct.*;
 import arc.util.*;
+import mindustry.content.Blocks;
 import mindustry.game.*;
 import mindustry.gen.*;
+import mindustry.world.Tile;
+
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import static mindustry.Vars.world;
 
 public class HexData{
     /** All hexes on the map. No order. */
@@ -77,7 +84,23 @@ public class HexData{
         players.sort(p -> -getControlled(p).size);
         return players;
     }
+    public Map<String, Integer> rankNames(){
+        // uuid to rank, 1 is the first rank, tie is allowed
+        Map<String, Integer> rankedNames = new LinkedHashMap<>();
+        int rank = 0;
+        int prevValue = Integer.MIN_VALUE;
+        Seq<Player> list = getLeaderboard();
+        for (Player p : list) {
+            // Assign the rank, incrementing only if the current value is different from the previous value
+            if (getControlled(p).size != prevValue) {
+                rank++;
+                prevValue = getControlled(p).size;
+            }
+            rankedNames.put(p.uuid(), rank);
+        }
 
+        return rankedNames;
+    }
     public @Nullable Player getPlayer(Team team){
         return teamMap.get(team.id);
     }
@@ -134,6 +157,8 @@ public class HexData{
         public HexCaptureEvent(Player player, Hex hex){
             this.player = player;
             this.hex = hex;
+            Tile tile = world.tile(hex.x, hex.y);
+            tile.setNet(Blocks.coreShard, player.team(), 0);
         }
     }
 
