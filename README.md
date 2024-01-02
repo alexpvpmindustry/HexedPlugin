@@ -3,7 +3,7 @@
 ## features
 
 - players who join in the midgame gets more items and a better starting core defense.
-- simple mmr system to reward better players (requires mongodb atlas account)
+- simple [mmr system](AlexELO.pdf) to reward better players (requires mongodb atlas account)
 
 ## todo
 
