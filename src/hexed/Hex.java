@@ -1,10 +1,10 @@
 package hexed;
 
 import arc.math.geom.*;
+import arc.struct.IntIntMap;
 import arc.util.*;
 import mindustry.game.*;
 import mindustry.game.Teams.*;
-import mindustry.gen.*;
 import mindustry.type.*;
 import mindustry.world.*;
 import mindustry.world.blocks.storage.*;
@@ -37,8 +37,8 @@ public class Hex{
         wy = y * tilesize;
     }
 
-    public void updateController(){
-        controller = findController();
+    public void updateController(IntIntMap hexes_per_team){
+        controller = findController(hexes_per_team);
     }
 
     public float getProgressPercent(Team team){
@@ -53,17 +53,17 @@ public class Hex{
         return world.tile(x, y).team() != Team.derelict && world.tile(x, y).block() instanceof CoreBlock;
     }
 
-    public @Nullable Team findController(){
+    public @Nullable Team findController(IntIntMap hexes_per_team){
         if(hasCore()){
             return world.tile(x, y).team();
         }
 
         Arrays.fill(progress, 0);
-        Groups.unit.intersect(wx - rad, wy - rad, rad*2, rad*2).each(e -> {
-            if(contains(e.x, e.y)){
-                progress[e.team.id] += e.health / 10f;
-            }
-        });
+//        Groups.unit.intersect(wx - rad, wy - rad, rad*2, rad*2).each(e -> {
+//            if(contains(e.x, e.y)){
+//                progress[e.team.id] += e.health / 10f;
+//            }
+//        });
 
         for(int cx = x - radius; cx < x + radius; cx++){
             for(int cy = y - radius; cy < y + radius; cy++){
@@ -71,7 +71,8 @@ public class Hex{
                 if(tile != null && tile.synthetic() && contains(tile) && tile.block().requirements != null){
                     for(ItemStack stack : tile.block().requirements){
                         // progress[tile.team().id] += stack.amount * stack.item.cost;
-                        progress[tile.team().id] += stack.amount;
+                        float amt = (float) (stack.amount * 5) /(5f+2.5f*hexes_per_team.get(tile.team().id,0));
+                        progress[tile.team().id] += amt;
                     }
                 }
             }

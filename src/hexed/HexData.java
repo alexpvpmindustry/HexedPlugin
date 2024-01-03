@@ -23,6 +23,7 @@ public class HexData{
     private IntMap<Player> teamMap = new IntMap<>();
     /** Maps team ID -> list of controlled hexes */
     private IntMap<Seq<Hex>> control = new IntMap<>();
+    public IntIntMap hexcounts_per_team = new IntIntMap();
     /** Data of specific teams. */
     private HexTeam[] teamData = new HexTeam[256];
 
@@ -69,12 +70,18 @@ public class HexData{
                     control.put(hex.controller.id, new Seq<>());
                 }
                 control.get(hex.controller.id).add(hex);
+                if (!hexcounts_per_team.containsKey( hex.controller.id )){
+                    hexcounts_per_team.put(hex.controller.id, 1);
+                }else{
+                    int getcounts = hexcounts_per_team.get(hex.controller.id);
+                    hexcounts_per_team.put(hex.controller.id, 1+getcounts);
+                }
             }
         }
     }
 
     public void updateControl(){
-        hexes.each(Hex::updateController);
+        hexes.each(hex -> hex.updateController( hexcounts_per_team ));
     }
 
     /** Allocates a new array of players sorted by score, descending. */
@@ -112,6 +119,9 @@ public class HexData{
     public Seq<Hex> getControlled(Team team){
         if(!control.containsKey(team.id)){
             control.put(team.id, new Seq<>());
+        }
+        if (!hexcounts_per_team.containsKey((team.id))){
+            hexcounts_per_team.put(team.id,0);
         }
         return control.get(team.id);
     }

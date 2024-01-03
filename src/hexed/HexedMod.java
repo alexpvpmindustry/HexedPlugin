@@ -19,7 +19,6 @@ import mindustry.mod.*;
 import mindustry.net.Packets.*;
 import mindustry.type.*;
 import mindustry.world.*;
-import mindustry.world.blocks.ConstructBlock;
 import mindustry.world.blocks.storage.*;
 import org.bson.Document;
 
@@ -193,7 +192,8 @@ public class HexedMod extends Plugin{
                 if(hex != null){
                     //update state
                     hex.spawnTime.reset();
-                    hex.updateController();
+                    // this is redundant hex.updateController(data.hexcounts_per_team);
+                    data.updateControl();
                     clearTilesInHex(hex);
                     // todo destroy half the units in the block
                 }
@@ -284,7 +284,7 @@ public class HexedMod extends Plugin{
         if(hex != null){
             loadout(p, hex.x, hex.y);
             Core.app.post(() -> data.data(p).chosen = false);
-            hex.findController();
+            hex.findController(data.hexcounts_per_team);
             // this is for local mode Long mmr = MMRsystem.getPlayerMMR(p.uuid());
             Long mmr = mmrmongo.read_hexdataV7(p,p.uuid());
             if (!joinedPlayers.contains(p.uuid())){
@@ -433,7 +433,7 @@ public class HexedMod extends Plugin{
         handler.<Player>register("hexstatus", "Get hex status at your position.", (args, player) -> {
             Hex hex = data.data(player).location;
             if(hex != null){
-                hex.updateController();
+                hex.updateController(data.hexcounts_per_team);
                 StringBuilder builder = new StringBuilder();
                 builder.append("| [lightgray]Hex #").append(hex.id).append("[]\n");
                 builder.append("| [lightgray]Owner:[] ").append(hex.controller != null && data.getPlayer(hex.controller) != null ? data.getPlayer(hex.controller).name : "<none>").append("\n");
