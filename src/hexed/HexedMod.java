@@ -7,6 +7,7 @@ import arc.util.*;
 import com.mongodb.client.model.UpdateOneModel;
 import com.mongodb.client.model.WriteModel;
 import hexed.HexData.*;
+import mindustry.Vars;
 import mindustry.content.*;
 import mindustry.core.GameState.*;
 import mindustry.core.NetServer.*;
@@ -61,6 +62,8 @@ public class HexedMod extends Plugin{
     private int lastMin;
     public HashMap<String, Integer> PlayersWhoLeft;
     //public MMR_config MMRsystem;
+    private static final String hubURL = "172.245.187.143"; // sandbox
+    private static final int hubPORT = 6869;
 
     public ObjectSet<String> joinedPlayers = new ObjectSet<>();
     private List<Long> allMMR = new ArrayList<>();
@@ -512,12 +515,21 @@ public class HexedMod extends Plugin{
         Log.info("&ly--SERVER RESTARTING--");
         Time.runTask(60f * 1f, () -> { //60f * 10f is 10 seconds
             Log.info("&ly--running kick task--");
-            netServer.kickAll(KickReason.serverRestarting);
+            kick_to_hub();
             Log.info("&ly--finish kick task--");
             Time.runTask(5f, () -> {
                 Log.info("&ly--system exit--");
                 System.exit(2);
             });
+        });
+    }
+
+    private static void kick_to_hub() {
+        // netServer.kickAll(KickReason.serverRestarting);
+        Vars.net.pingHost(hubURL, hubPORT, host -> {
+            Call.connect(player.con, hubURL, hubPORT);
+        }, (e) -> {
+            netServer.kickAll(KickReason.serverRestarting);
         });
     }
 

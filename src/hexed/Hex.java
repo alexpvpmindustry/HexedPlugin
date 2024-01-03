@@ -71,7 +71,7 @@ public class Hex{
                 if(tile != null && tile.synthetic() && contains(tile) && tile.block().requirements != null){
                     for(ItemStack stack : tile.block().requirements){
                         // progress[tile.team().id] += stack.amount * stack.item.cost;
-                        float amt = (float) (stack.amount * 5) /(5f+2.5f*hexes_per_team.get(tile.team().id,0));
+                        float amt = (float) (stack.amount * 15) /(15f+2.5f*hexes_per_team.get(tile.team().id,0));
                         progress[tile.team().id] += amt;
                     }
                 }
