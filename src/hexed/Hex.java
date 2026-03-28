@@ -27,7 +27,7 @@ public class Hex{
     public final float rad = radius * tilesize;
 
     public @Nullable Team controller;
-    public CooldownTimer spawnTime = new CooldownTimer(HexedMod.spawnDelay);
+    public CooldownTimer spawnTime = new CooldownTimer((long) HexedMod.spawnDelay);
 
     public Hex(int id, int x, int y){
         this.id = id;
