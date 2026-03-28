@@ -446,6 +446,7 @@ public class HexedMod extends Plugin{
                     }
                 }
                 player.sendMessage(builder.toString());
+                console.log("Player " + player.name + "#" + hex.id+"progress is "+hex.getProgressPercent(data.data(player).team));
             }else{
                 player.sendMessage("[scarlet]No hex found.");
             }
