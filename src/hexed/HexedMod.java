@@ -341,6 +341,7 @@ public class HexedMod extends Plugin{
         if(team.location.controller == null){
             if(team.progressPercent > 0){
                 message.append("[lightgray]Capture progress: [accent]").append((int)(team.progressPercent)).append("%");
+                console.log(team.progressPercent);
             }else{
                 message.append("[lightgray][[Empty]");
             }
@@ -446,7 +447,6 @@ public class HexedMod extends Plugin{
                     }
                 }
                 player.sendMessage(builder.toString());
-                console.log("Player " + player.name + "#" + hex.id+"progress is "+hex.getProgressPercent(data.data(player).team));
             }else{
                 player.sendMessage("[scarlet]No hex found.");
             }
