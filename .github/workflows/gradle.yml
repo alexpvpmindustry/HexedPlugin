@@ -1,0 +1,57 @@
+name: Java Check
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 17
+      uses: actions/setup-java@v1
+      with:
+        java-version: 17
+    - name: Grant execute permission for gradlew
+      run: chmod +x gradlew
+    - name: increment V Set up Node.js
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+    - name: Install dependencies
+      run: npm install
+    - name: Increment version
+      run: node increment-version.js ${{ github.run_number }} 
+
+    - name: Download Mindustry v156 jars
+      run: |
+        mkdir libs
+        curl -L -o libs/server.jar https://github.com/Anuken/Mindustry/releases/download/v156.2/server-release.jar
+        curl -L -o libs/Mindustry.jar https://github.com/Anuken/Mindustry/releases/download/v156.2/Mindustry.jar
+        curl -L -o libs/dependencies.jar https://github.com/Anuken/Mindustry/releases/download/v156.2/dependencies.jar
+
+    - name: Build with Gradle
+      run: ./gradlew jar
+    - name: Upload built jar file
+      uses: actions/upload-artifact@v4
+      with:
+        name: AlexHex.jar
+        path: build/libs/*.jar
+
+    - name: Create Release2
+    # You may pin to the exact commit or the version.
+    # uses: ncipollo/release-action@4b71ee3b25951e6098e7434cdc485edc5b3adab2
+      uses: ncipollo/release-action@v1.7.3
+      with:
+        # An optional flag which indicates if we should update a release if it already exists. Defaults to false.
+        #allowUpdates: # optional, default is 
+        # An optional set of paths representing artifacts to upload to the release. This may be a single path or a comma delimited list of paths (or globs)
+        artifacts: "build/libs/*.jar,README.md" # optional, default is     
+        # Optionally marks this release as a draft release. Set to true to enable.
+        draft: false # optional, default is   
+        tag: auto_release_${{ github.run_number }}
+        token: ${{ secrets.GITHUB_TOKEN }}
