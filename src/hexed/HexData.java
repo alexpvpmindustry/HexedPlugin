@@ -157,7 +157,7 @@ public class HexData{
         public @Nullable Hex location;
         public float progressPercent;
         public boolean lastCaptured;
-        public Timekeeper lastMessage = new Timekeeper(HexedMod.messageTime);
+        public CooldownTimer lastMessage = new CooldownTimer(HexedMod.messageTime);
     }
 
     public static class HexCaptureEvent{
