@@ -37,7 +37,7 @@ public class HexedMod extends Plugin{
     //health requirement needed to capture a hex; no longer used
     public static final float healthRequirement = 3500;
     //item requirement to captured a hex
-    public static final int itemRequirement = 5510;
+    public static final int itemRequirement = 1510;
 
     public static final int messageTime = 1;
     //in ticks: 60 minutes
