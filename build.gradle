@@ -12,7 +12,7 @@ repositories{
 }
 ext{
     //the build number that this plugin is made for
-    mindustryVersion = 'v146'
+    mindustryVersion = 'v156'
     jabelVersion = "93fde537c7"
 }
 //java 8 backwards compatibility flag
@@ -23,8 +23,11 @@ allprojects{
 }
 
 dependencies{
-    compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
-    compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
+    // compileOnly "com.github.Anuken.Arc:arc-core:$mindustryVersion"
+    // compileOnly "com.github.Anuken.Mindustry:core:$mindustryVersion"
+    compileOnly files("libs/server.jar")
+    compileOnly files("libs/Mindustry.jar")
+    compileOnly files("libs/dependencies.jar")
     implementation 'org.mongodb:mongo-java-driver:3.12.7'
     compileOnly "com.github.Anuken.Mindustry:server:$mindustryVersion"
     implementation group: 'org.json', name: 'json', version: '20231013'
