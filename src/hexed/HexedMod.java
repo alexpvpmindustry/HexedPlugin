@@ -341,7 +341,7 @@ public class HexedMod extends Plugin{
         if(team.location.controller == null){
             if(team.progressPercent > 0){
                 message.append("[lightgray]Capture progress: [accent]").append((int)(team.progressPercent)).append("%");
-                console.log(team.progressPercent);
+                Log.info("progress: "+team.progressPercent);
             }else{
                 message.append("[lightgray][[Empty]");
             }
