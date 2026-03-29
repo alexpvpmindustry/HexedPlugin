@@ -343,7 +343,6 @@ public class HexedMod extends Plugin{
         if(team.location.controller == null){
             if(team.progressPercent > 0){
                 message.append("[lightgray]Capture progress: [accent]").append((int)(team.progressPercent)).append("%");
-                Log.info("progress: "+team.progressPercent);
             }else{
                 message.append("[lightgray][[Empty]");
             }
@@ -515,12 +514,9 @@ public class HexedMod extends Plugin{
             }
         }
         clear_player_data();
-        Log.info("&ly--SERVER RESTARTING--");
-        Log.info("&ly--running kick task--");
+        Log.info("&ly--SERVER RESTARTING running kick task--"); 
         kick_to_hub();
-        Time.runTask(60f * 1f, () -> { //60f * 10f is 10 seconds
-            // Log.info("&ly--running kick task--");
-            // kick_to_hub();
+        Time.runTask(60f * 1f, () -> { //60f * 10f is 10 seconds  
             Log.info("&ly--finish kick task--");
             Time.runTask(60f*5f, () -> {
                 Log.info("&ly--system exit--");
@@ -531,17 +527,12 @@ public class HexedMod extends Plugin{
 
     private static void kick_to_hub() {
         // netServer.kickAll(KickReason.serverRestarting);
-        for (Player player : Groups.player){ 
-        
+        for (Player player : Groups.player){
           Vars.net.pingHost(hubURL, hubPORT, host -> {
-            Log.info("&ly-- inside ping host--");
             if (player!= null && player.con != null){
-              Call.connect(player.con, hubURL, hubPORT);
-              Log.info("&ly--ping successful, kick to to hub--");
-              }
-            Log.info("&ly-- end of ping host--");
+              Call.connect(player.con, hubURL, hubPORT); 
+              } 
           }, (e) -> {
-              Log.info("&ly--failed to ping hub--");
               netServer.kickAll(KickReason.serverRestarting);
           });
       }
