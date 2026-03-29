@@ -528,7 +528,9 @@ public class HexedMod extends Plugin{
     private static void kick_to_hub() {
         // netServer.kickAll(KickReason.serverRestarting);
         Vars.net.pingHost(hubURL, hubPORT, host -> {
+          if (player!= null && player.con != null){
             Call.connect(player.con, hubURL, hubPORT);
+            }
         }, (e) -> {
             netServer.kickAll(KickReason.serverRestarting);
         });
