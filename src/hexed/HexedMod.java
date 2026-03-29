@@ -41,7 +41,7 @@ public class HexedMod extends Plugin{
 
     public static final int messageTime = 1;
     //in ticks: 60 minutes
-    private final static int roundTime = 60 * 60 * 4; // should be 60*60*40
+    private final static int roundTime = 60 * 60 * 2; // should be 60*60*40
     //in ticks: 2 minutes
     private final static int leaderboardTime = 60 * 60 * 2;
 
@@ -532,8 +532,10 @@ public class HexedMod extends Plugin{
         Vars.net.pingHost(hubURL, hubPORT, host -> {
           if (player!= null && player.con != null){
             Call.connect(player.con, hubURL, hubPORT);
+            Log.info("&ly--ping successful, kick to to hub--");
             }
         }, (e) -> {
+            Log.info("&ly--failed to ping hub--");
             netServer.kickAll(KickReason.serverRestarting);
         });
     }
