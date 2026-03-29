@@ -62,10 +62,10 @@ public class HexedMod extends Plugin{
     private int lastMin;
     public HashMap<String, Integer> PlayersWhoLeft;
     //public MMR_config MMRsystem;
-    //private static final String hubURL = "172.245.187.143"; // attack usa 
-    //private static final int hubPORT = 25588; // attack usa
-    private static final String hubURL = "92.119.127.171"; // racknerd FN test server
-    private static final int hubPORT = 6889; // racknerd FN test server
+    private static final String hubURL = "172.245.187.143"; // attack usa 
+    private static final int hubPORT = 25588; // attack usa
+    //private static final String hubURL = "92.119.127.171"; // racknerd FN test server
+    //private static final int hubPORT = 6889; // racknerd FN test server
 
     public ObjectSet<String> joinedPlayers = new ObjectSet<>();
     private List<Long> allMMR = new ArrayList<>();
@@ -522,7 +522,7 @@ public class HexedMod extends Plugin{
             // Log.info("&ly--running kick task--");
             // kick_to_hub();
             Log.info("&ly--finish kick task--");
-            Time.runTask(60f*15f, () -> {
+            Time.runTask(60f*5f, () -> {
                 Log.info("&ly--system exit--");
                 System.exit(2);
             });
@@ -531,15 +531,20 @@ public class HexedMod extends Plugin{
 
     private static void kick_to_hub() {
         // netServer.kickAll(KickReason.serverRestarting);
-        Vars.net.pingHost(hubURL, hubPORT, host -> {
-          if (player!= null && player.con != null){
-            Call.connect(player.con, hubURL, hubPORT);
-            Log.info("&ly--ping successful, kick to to hub--");
-            }
-        }, (e) -> {
-            Log.info("&ly--failed to ping hub--");
-            netServer.kickAll(KickReason.serverRestarting);
-        });
+        for (Player player : Groups.player){ 
+        
+          Vars.net.pingHost(hubURL, hubPORT, host -> {
+            Log.info("&ly-- inside ping host--");
+            if (player!= null && player.con != null){
+              Call.connect(player.con, hubURL, hubPORT);
+              Log.info("&ly--ping successful, kick to to hub--");
+              }
+            Log.info("&ly-- end of ping host--");
+          }, (e) -> {
+              Log.info("&ly--failed to ping hub--");
+              netServer.kickAll(KickReason.serverRestarting);
+          });
+      }
     }
 
     private Long getNewMMR(Long currMMR, Long avgMMR,Map<String, Integer> uuid_to_rank,String muuid) {
