@@ -41,7 +41,7 @@ public class HexedMod extends Plugin{
 
     public static final int messageTime = 1;
     //in ticks: 60 minutes
-    private final static int roundTime = 60 * 60 * 2; // should be 60*60*40
+    private final static int roundTime = 60 * 60 * 30; // should be 60*60*30
     //in ticks: 2 minutes
     private final static int leaderboardTime = 60 * 60 * 2;
 
@@ -296,7 +296,7 @@ public class HexedMod extends Plugin{
                 joinedPlayers.add(p.uuid());
                 allMMR.add(mmr);
                 PlayersMMR.put(p.uuid(),mmr);
-                Call.infoMessage(p.con,"Welcome to [red]A[yellow]L[teal]E[blue]X [white]| HEX [green](PRE-ALPHA).[]\n\n[lime]Capture cores by:[]\n- Building on empty tiles\n- Eliminating enemies.\n\n[lime]Objective: []Most Hexes in 40mins or First to 25 Hexes.\n\n[accent]Note: []BuildSpeed X5, Damage X1.2\n[sky]Your current MMR: [forest]"+mmr+" [sky]GL HF ");
+                Call.infoMessage(p.con,"Welcome to [red]A[yellow]L[teal]E[blue]X [white]| HEX [green](PRE-ALPHA).[]\n\n[lime]Capture cores by:[]\n- Building on empty tiles\n- Eliminating enemies.\n\n[lime]Objective: []Most Hexes in 30mins or First to 25 Hexes.\n\n[accent]Note: []BuildSpeed X5, Damage X1.2\n[sky]Your current MMR: [forest]"+mmr+" [sky]GL HF ");
             }
             else{
                 Call.infoMessage(p.con,"Welcome back. Your core was erased, and now you have a new one.");
