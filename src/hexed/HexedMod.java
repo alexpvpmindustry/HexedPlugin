@@ -62,8 +62,10 @@ public class HexedMod extends Plugin{
     private int lastMin;
     public HashMap<String, Integer> PlayersWhoLeft;
     //public MMR_config MMRsystem;
-    private static final String hubURL = "172.245.187.143"; // attack usa
-    private static final int hubPORT = 25588; // attack usa
+    //private static final String hubURL = "172.245.187.143"; // attack usa 
+    //private static final int hubPORT = 25588; // attack usa
+    private static final String hubURL = "92.119.127.171"; // racknerd FN test server
+    private static final int hubPORT = 6889; // racknerd FN test server
 
     public ObjectSet<String> joinedPlayers = new ObjectSet<>();
     private List<Long> allMMR = new ArrayList<>();
