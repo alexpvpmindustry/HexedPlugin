@@ -41,8 +41,8 @@ public class HexedMod extends Plugin{
 
     public static final int messageTime = 1;
     //in ticks: 60 minutes
-    private final static int roundTime = 60 * 60 * 40;
-    //in ticks: 3 minutes
+    private final static int roundTime = 60 * 60 * 4; // should be 60*60*40
+    //in ticks: 2 minutes
     private final static int leaderboardTime = 60 * 60 * 2;
 
     private final static int updateTime = 60 * 2;
@@ -62,8 +62,8 @@ public class HexedMod extends Plugin{
     private int lastMin;
     public HashMap<String, Integer> PlayersWhoLeft;
     //public MMR_config MMRsystem;
-    private static final String hubURL = "172.245.187.143"; // sandbox
-    private static final int hubPORT = 6869;
+    private static final String hubURL = "172.245.187.143"; // attack usa
+    private static final int hubPORT = 25588; // attack usa
 
     public ObjectSet<String> joinedPlayers = new ObjectSet<>();
     private List<Long> allMMR = new ArrayList<>();
@@ -518,7 +518,7 @@ public class HexedMod extends Plugin{
             Log.info("&ly--running kick task--");
             kick_to_hub();
             Log.info("&ly--finish kick task--");
-            Time.runTask(5f, () -> {
+            Time.runTask(50f, () -> {
                 Log.info("&ly--system exit--");
                 System.exit(2);
             });
