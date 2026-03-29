@@ -514,11 +514,13 @@ public class HexedMod extends Plugin{
         }
         clear_player_data();
         Log.info("&ly--SERVER RESTARTING--");
+        Log.info("&ly--running kick task--");
+        kick_to_hub();
         Time.runTask(60f * 1f, () -> { //60f * 10f is 10 seconds
-            Log.info("&ly--running kick task--");
-            kick_to_hub();
+            // Log.info("&ly--running kick task--");
+            // kick_to_hub();
             Log.info("&ly--finish kick task--");
-            Time.runTask(50f, () -> {
+            Time.runTask(60f*15f, () -> {
                 Log.info("&ly--system exit--");
                 System.exit(2);
             });
