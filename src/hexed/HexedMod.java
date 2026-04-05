@@ -41,7 +41,7 @@ public class HexedMod extends Plugin{
 
     public static final int messageTime = 1;
     //in ticks: 60 minutes
-    private final static int roundTime = 60 * 60 * 30; // should be 60*60*30
+    private final static int roundTime = 60 * 60 * 40; // should be 60*60*40
     //in ticks: 2 minutes
     private final static int leaderboardTime = 60 * 60 * 2;
 
@@ -62,10 +62,10 @@ public class HexedMod extends Plugin{
     private int lastMin;
     public HashMap<String, Integer> PlayersWhoLeft;
     //public MMR_config MMRsystem;
-    private static final String hubURL = "172.245.187.143"; // attack usa 
-    private static final int hubPORT = 25588; // attack usa
-    //private static final String hubURL = "92.119.127.171"; // racknerd FN test server
-    //private static final int hubPORT = 6889; // racknerd FN test server
+    //private static final String hubURL = "172.245.187.143"; // attack usa 
+    //private static final int hubPORT = 25588; // attack usa
+    private static final String hubURL = "92.119.127.171"; // racknerd FN test server (afk zone)
+    private static final int hubPORT = 6889; // racknerd FN test server
 
     public ObjectSet<String> joinedPlayers = new ObjectSet<>();
     private List<Long> allMMR = new ArrayList<>();
@@ -112,7 +112,7 @@ public class HexedMod extends Plugin{
         rules.coreDestroyClear = true;
         rules.coreCapture = true;
         rules.hideBannedBlocks = true;
-        rules.loadout = ItemStack.list(Items.copper, 600, Items.lead, 600, Items.graphite, 100, Items.metaglass, 100, Items.silicon, 50, Items.thorium,20,Items.plastanium, 20,Items.titanium, 20,Items.phaseFabric,5,Items.surgeAlloy,1);
+        rules.loadout = ItemStack.list(Items.copper, 800, Items.lead, 800, Items.graphite, 200, Items.metaglass, 200, Items.silicon, 150, Items.thorium,50,Items.plastanium, 50,Items.titanium, 120,Items.phaseFabric,5,Items.surgeAlloy,2);
         //for further configuration, use `ruless add <name> <value...>`
         /*
         rules.loadout = ItemStack.list(Items.copper, 300, Items.lead, 500, Items.graphite, 150, Items.metaglass, 150, Items.silicon, 150, Items.plastanium, 50);
@@ -296,13 +296,13 @@ public class HexedMod extends Plugin{
                 joinedPlayers.add(p.uuid());
                 allMMR.add(mmr);
                 PlayersMMR.put(p.uuid(),mmr);
-                Call.infoMessage(p.con,"Welcome to [red]A[yellow]L[teal]E[blue]X [white]| HEX [green](PRE-ALPHA).[]\n\n[lime]Capture cores by:[]\n- Building on empty tiles\n- Eliminating enemies.\n\n[lime]Objective: []Most Hexes in 30mins or First to 25 Hexes.\n\n[accent]Note: []BuildSpeed X5, Damage X1.2\n[sky]Your current MMR: [forest]"+mmr+" [sky]GL HF ");
+                Call.infoMessage(p.con,"Welcome to [red]A[yellow]L[teal]E[blue]X [white]| HEX [green](BETA).[]\n\n[lime]Capture cores by:[]\n- Building on empty tiles\n- Eliminating enemies.\n\n[lime]Objective: []Most Hexes in 40mins or First to 25 Hexes.\n\n[accent]Note: []BuildSpeed X5, Damage X1.2\n[sky]Your current MMR: [forest]"+mmr+" [sky]GL HF ");
             }
             else{
                 Call.infoMessage(p.con,"Welcome back. Your core was erased, and now you have a new one.");
             }
             Long avgMMR = calculateAverageMMR(allMMR);
-            Call.sendMessage("[red]A[yellow]L[teal]E[blue]X [white]| HEX [green](PRE-ALPHA)[]: [sky]Average MMR this game is[] "+avgMMR+".");
+            Call.sendMessage("[red]A[yellow]L[teal]E[blue]X [white]| HEX [green](BETA)[]: [sky]Average MMR this game is[] "+avgMMR+".");
         }else{
             Call.infoMessage(p.con, "There are currently no empty hex spaces available.\nAssigning into spectator mode.");
             p.unit().kill();
@@ -518,7 +518,7 @@ public class HexedMod extends Plugin{
         kick_to_hub();
         Time.runTask(60f * 1f, () -> { //60f * 10f is 10 seconds  
             Log.info("&ly--finish kick task--");
-            Time.runTask(60f*5f, () -> {
+            Time.runTask(60f*1f, () -> {
                 Log.info("&ly--system exit--");
                 System.exit(2);
             });
@@ -645,7 +645,7 @@ public class HexedMod extends Plugin{
             if(tile.block() instanceof CoreBlock){
                 for(ItemStack stack : state.rules.loadout){
                     if(midgamemode){
-                        Call.setItem(tile.build, stack.item, stack.amount*5+500);
+                        Call.setItem(tile.build, stack.item, stack.amount*3+1500);
                     }else {
                         Call.setItem(tile.build, stack.item, stack.amount);
                     }
